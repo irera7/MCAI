@@ -1,0 +1,357 @@
+#root {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Header Styles */
+.app-header {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+/* Card Hover Effects */
+.ant-card:hover {
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2) !important;
+}
+
+/* Main Content */
+.main-content {
+  width: 100%;
+}
+
+/* ===== RESPONSIVE STYLES ===== */
+
+/* Mobile - Extra Small (< 576px) */
+@media (max-width: 575px) {
+  .ant-layout-header {
+    padding: 0 8px !important;
+    height: 56px !important;
+    line-height: 56px !important;
+  }
+
+  .ant-typography h1 {
+    font-size: 20px !important;
+  }
+
+  .ant-typography h2 {
+    font-size: 18px !important;
+  }
+
+  .ant-typography h3 {
+    font-size: 16px !important;
+  }
+
+  .ant-card {
+    margin-bottom: 12px !important;
+  }
+
+  .ant-card .ant-card-body {
+    padding: 12px !important;
+  }
+
+  .ant-table {
+    font-size: 12px !important;
+  }
+
+  .ant-table-thead > tr > th,
+  .ant-table-tbody > tr > td {
+    padding: 8px 6px !important;
+  }
+
+  .ant-btn {
+    padding: 4px 8px !important;
+    font-size: 12px !important;
+  }
+
+  .ant-btn-lg {
+    padding: 6px 12px !important;
+    font-size: 14px !important;
+  }
+
+  .ant-form-item {
+    margin-bottom: 12px !important;
+  }
+
+  .ant-form-item-label {
+    padding-bottom: 4px !important;
+  }
+
+  .ant-input,
+  .ant-select-selector,
+  .ant-input-number {
+    font-size: 14px !important;
+  }
+
+  .ant-steps {
+    margin-bottom: 16px !important;
+  }
+
+  .ant-steps-item-title {
+    font-size: 12px !important;
+  }
+
+  .ant-steps-item-description {
+    font-size: 10px !important;
+  }
+
+  /* Hide step descriptions on mobile */
+  .ant-steps-item-description {
+    display: none !important;
+  }
+
+  .ant-statistic-title {
+    font-size: 11px !important;
+  }
+
+  .ant-statistic-content {
+    font-size: 18px !important;
+  }
+
+  .ant-progress-text {
+    font-size: 12px !important;
+  }
+
+  .ant-tag {
+    font-size: 11px !important;
+    padding: 0 4px !important;
+  }
+
+  .ant-modal {
+    max-width: calc(100vw - 32px) !important;
+    margin: 16px auto !important;
+  }
+
+  .ant-modal-body {
+    padding: 16px !important;
+  }
+
+  .ant-drawer-body {
+    padding: 12px !important;
+  }
+
+  /* Row and Col adjustments */
+  .ant-row {
+    margin-left: -6px !important;
+    margin-right: -6px !important;
+  }
+
+  .ant-col {
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+  }
+
+  /* Upload area */
+  .ant-upload-drag {
+    padding: 16px !important;
+  }
+
+  .ant-upload-drag-icon {
+    font-size: 32px !important;
+  }
+
+  /* Divider */
+  .ant-divider {
+    margin: 12px 0 !important;
+  }
+
+  /* Space component */
+  .ant-space {
+    gap: 8px !important;
+  }
+}
+
+/* Mobile - Small (576px - 767px) */
+@media (min-width: 576px) and (max-width: 767px) {
+  .ant-layout-header {
+    padding: 0 12px !important;
+  }
+
+  .ant-card .ant-card-body {
+    padding: 16px !important;
+  }
+
+  .ant-table-thead > tr > th,
+  .ant-table-tbody > tr > td {
+    padding: 10px 8px !important;
+  }
+
+  .ant-steps-item-description {
+    display: none !important;
+  }
+}
+
+/* Tablet (768px - 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .ant-layout-header {
+    padding: 0 16px !important;
+  }
+}
+
+/* Desktop (992px+) */
+@media (min-width: 992px) {
+  .ant-layout-header {
+    padding: 0 24px !important;
+  }
+}
+
+/* ===== TOUCH DEVICE OPTIMIZATIONS ===== */
+@media (hover: none) and (pointer: coarse) {
+  /* Larger touch targets */
+  .ant-btn {
+    min-height: 40px !important;
+    min-width: 40px !important;
+  }
+
+  .ant-menu-item {
+    min-height: 48px !important;
+    line-height: 48px !important;
+  }
+
+  .ant-select-selector {
+    min-height: 40px !important;
+  }
+
+  .ant-input {
+    min-height: 40px !important;
+  }
+
+  /* Remove hover effects on touch */
+  .ant-card:hover {
+    transform: none !important;
+  }
+
+  .ant-btn:hover {
+    transform: none !important;
+  }
+
+  /* Increase tap area for checkboxes and radios */
+  .ant-checkbox-wrapper,
+  .ant-radio-wrapper {
+    padding: 8px 0 !important;
+  }
+}
+
+/* ===== SCROLLBAR STYLES ===== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* ===== DARK MODE SCROLLBAR ===== */
+[data-theme='dark'] ::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme='dark'] ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme='dark'] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ===== UTILITY CLASSES ===== */
+.hide-on-mobile {
+  display: block;
+}
+
+.show-on-mobile {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+
+  .show-on-mobile {
+    display: block !important;
+  }
+}
+
+/* Responsive text */
+.responsive-text {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Responsive table wrapper */
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Safe area for notched devices */
+@supports (padding: max(0px)) {
+  .app-header {
+    padding-left: max(12px, env(safe-area-inset-left)) !important;
+    padding-right: max(12px, env(safe-area-inset-right)) !important;
+  }
+
+  .main-content {
+    padding-bottom: max(16px, env(safe-area-inset-bottom)) !important;
+  }
+}
+
+/* ===== ANIMATIONS ===== */
+.ant-drawer-content-wrapper {
+  transition: transform 0.3s ease-out !important;
+}
+
+/* Smooth transitions */
+.ant-layout,
+.ant-layout-sider,
+.ant-layout-content {
+  transition: all 0.2s ease;
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  .ant-layout-header,
+  .ant-layout-sider,
+  .ant-drawer {
+    display: none !important;
+  }
+
+  .ant-layout-content {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}

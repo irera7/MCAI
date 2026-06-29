@@ -1,0 +1,252 @@
+<Page x:Class="ModelCreator.UI.Views.VideoProjectPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      d:DesignHeight="750" d:DesignWidth="900"
+      Title="Video Classification Project">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="🎬 Video Classification Project" 
+                       FontSize="28" FontWeight="Bold" 
+                       Foreground="{DynamicResource PrimaryBrush}"/>
+            <TextBlock Text="Train models for action recognition and video understanding" 
+                       FontSize="14" Opacity="0.7" Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <!-- Main Content -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <!-- Project Info -->
+                <Border Background="{DynamicResource CardBackgroundBrush}" 
+                        CornerRadius="8" Padding="20" Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="Project Information" 
+                                   FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Project Name:" Margin="0,0,0,10"/>
+                            <TextBox Grid.Row="0" Grid.Column="1" x:Name="ProjectNameTextBox" Margin="0,0,0,10" Padding="8"/>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Description:" Margin="0,0,0,10"/>
+                            <TextBox Grid.Row="1" Grid.Column="1" x:Name="DescriptionTextBox" 
+                                     Margin="0,0,0,10" Padding="8" Height="60" 
+                                     TextWrapping="Wrap" AcceptsReturn="True"/>
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Dataset Type:" Margin="0,0,0,10"/>
+                            <ComboBox Grid.Row="2" Grid.Column="1" x:Name="DatasetTypeComboBox" 
+                                      Margin="0,0,0,10" Padding="8" SelectedIndex="0">
+                                <ComboBoxItem Content="Action Recognition (UCF-101)"/>
+                                <ComboBoxItem Content="Activity Recognition"/>
+                                <ComboBoxItem Content="Sports Classification"/>
+                                <ComboBoxItem Content="Custom Dataset"/>
+                            </ComboBox>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Data Upload -->
+                <Border Background="{DynamicResource CardBackgroundBrush}" 
+                        CornerRadius="8" Padding="20" Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="Video Data Upload" 
+                                   FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+
+                        <TextBlock TextWrapping="Wrap" Opacity="0.8" Margin="0,0,0,10">
+                            Upload your video dataset:
+                            <LineBreak/>
+                            • Videos organized in class-named folders
+                            <LineBreak/>
+                            • Supported formats: .mp4, .avi, .mov
+                            <LineBreak/>
+                            • Recommended: 16-32 frames per video clip
+                        </TextBlock>
+
+                        <Button x:Name="UploadDataButton" 
+                                Content="📁 Upload Video Dataset" 
+                                Padding="15,10" 
+                                Click="UploadDataButton_Click"
+                                Background="{DynamicResource PrimaryBrush}" 
+                                Foreground="White" 
+                                FontWeight="SemiBold"
+                                Cursor="Hand"/>
+
+                        <TextBlock x:Name="DataStatusTextBlock" 
+                                   Margin="0,10,0,0" 
+                                   Foreground="Green" 
+                                   FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Model Selection -->
+                <Border Background="{DynamicResource CardBackgroundBrush}" 
+                        CornerRadius="8" Padding="20" Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="Model Selection" 
+                                   FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+
+                        <RadioButton x:Name="CNN3DRadio" 
+                                     Content="CNN3D - 3D Convolutional Network" 
+                                     GroupName="VideoModels" 
+                                     IsChecked="True" 
+                                     Margin="0,0,0,10"/>
+                        <TextBlock Text="Standard 3D CNN for video classification" 
+                                   Opacity="0.7" Margin="25,0,0,15" FontSize="12"/>
+
+                        <RadioButton x:Name="R2Plus1DRadio" 
+                                     Content="R(2+1)D - Efficient 3D Model" 
+                                     GroupName="VideoModels" 
+                                     Margin="0,0,0,10"/>
+                        <TextBlock Text="Decomposes 3D conv into 2D spatial + 1D temporal (faster)" 
+                                   Opacity="0.7" Margin="25,0,0,15" FontSize="12"/>
+
+                        <RadioButton x:Name="SlowFastRadio" 
+                                     Content="SlowFast - Dual Pathway Network" 
+                                     GroupName="VideoModels" 
+                                     Margin="0,0,0,10"/>
+                        <TextBlock Text="State-of-the-art, uses slow (spatial) + fast (temporal) pathways" 
+                                   Opacity="0.7" Margin="25,0,0,15" FontSize="12"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Video Processing Config -->
+                <Border Background="{DynamicResource CardBackgroundBrush}" 
+                        CornerRadius="8" Padding="20" Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="Video Processing Configuration" 
+                                   FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Grid.Row="0" Grid.Column="0">
+                                <TextBlock Text="Frames per Clip:" Margin="0,0,0,5"/>
+                                <ComboBox x:Name="FramesComboBox" SelectedIndex="1" Padding="8">
+                                    <ComboBoxItem Content="8 frames"/>
+                                    <ComboBoxItem Content="16 frames"/>
+                                    <ComboBoxItem Content="32 frames"/>
+                                    <ComboBoxItem Content="64 frames"/>
+                                </ComboBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="0" Grid.Column="2">
+                                <TextBlock Text="Frame Size:" Margin="0,0,0,5"/>
+                                <ComboBox x:Name="FrameSizeComboBox" SelectedIndex="0" Padding="8">
+                                    <ComboBoxItem Content="112x112"/>
+                                    <ComboBoxItem Content="224x224"/>
+                                </ComboBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,15,0,0">
+                                <TextBlock Text="FPS (Frames Per Second):" Margin="0,0,0,5"/>
+                                <ComboBox x:Name="FPSComboBox" SelectedIndex="1" Padding="8">
+                                    <ComboBoxItem Content="15 FPS"/>
+                                    <ComboBoxItem Content="30 FPS"/>
+                                    <ComboBoxItem Content="60 FPS"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Training Configuration -->
+                <Border Background="{DynamicResource CardBackgroundBrush}" 
+                        CornerRadius="8" Padding="20" Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="Training Configuration" 
+                                   FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Grid.Row="0" Grid.Column="0">
+                                <TextBlock Text="Batch Size:" Margin="0,0,0,5"/>
+                                <ComboBox x:Name="BatchSizeComboBox" SelectedIndex="0" Padding="8">
+                                    <ComboBoxItem Content="4"/>
+                                    <ComboBoxItem Content="8"/>
+                                    <ComboBoxItem Content="16"/>
+                                </ComboBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="0" Grid.Column="2">
+                                <TextBlock Text="Learning Rate:" Margin="0,0,0,5"/>
+                                <TextBox x:Name="LearningRateTextBox" Text="0.001" Padding="8"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,15,0,0">
+                                <TextBlock Text="Epochs:" Margin="0,0,0,5"/>
+                                <TextBox x:Name="EpochsTextBox" Text="50" Padding="8"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,15,0,0">
+                                <TextBlock Text="Dropout:" Margin="0,0,0,5"/>
+                                <ComboBox x:Name="DropoutComboBox" SelectedIndex="1" Padding="8">
+                                    <ComboBoxItem Content="0.3"/>
+                                    <ComboBoxItem Content="0.5"/>
+                                    <ComboBoxItem Content="0.7"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Action Buttons -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="CreateProjectButton" 
+                            Content="✅ Create Video Project" 
+                            Padding="20,12" 
+                            Click="CreateProjectButton_Click"
+                            Background="{DynamicResource SuccessBrush}" 
+                            Foreground="White" 
+                            FontSize="14" 
+                            FontWeight="SemiBold"
+                            Cursor="Hand"
+                            Margin="0,0,10,0"/>
+
+                    <Button Content="❌ Cancel" 
+                            Padding="20,12" 
+                            Click="CancelButton_Click"
+                            Background="{DynamicResource DangerBrush}" 
+                            Foreground="White" 
+                            FontSize="14"
+                            Cursor="Hand"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
+

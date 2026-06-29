@@ -1,0 +1,259 @@
+<Page x:Class="ModelCreator.UI.Views.TrainingDashboardPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+      mc:Ignorable="d" 
+      d:DesignHeight="700" d:DesignWidth="1200"
+      Title="Training Dashboard">
+
+    <Grid Background="{StaticResource BackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Header -->
+        <Border Grid.Row="0" Padding="30,20">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Training Dashboard" 
+                              FontSize="28" 
+                              FontWeight="Bold"
+                              Foreground="{StaticResource TextPrimaryBrush}"/>
+                    <TextBlock x:Name="ProjectNameText"
+                              Text="Project: My Model" 
+                              FontSize="14" 
+                              Foreground="{StaticResource TextSecondaryBrush}"
+                              Margin="0,5,0,0"/>
+                </StackPanel>
+                
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button x:Name="StopButton"
+                           Content="⏹ Stop" 
+                           Width="100" 
+                           Height="40"
+                           Margin="0,0,10,0"
+                           Click="StopTraining_Click"/>
+                    <Button x:Name="SaveCheckpointButton"
+                           Content="💾 Save" 
+                           Width="100" 
+                           Height="40"
+                           Click="SaveCheckpoint_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        
+        <!-- Main Content -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <Grid Margin="30,0,30,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="300"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="250"/>
+                </Grid.RowDefinitions>
+                
+                <!-- Progress Summary -->
+                <Border Grid.Row="0" Style="{StaticResource Card}" Margin="0,0,0,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <!-- Current Epoch -->
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Current Epoch" 
+                                      FontSize="12" 
+                                      Foreground="{StaticResource TextSecondaryBrush}"/>
+                            <TextBlock x:Name="CurrentEpochText"
+                                      Text="Loading..." 
+                                      FontSize="24" 
+                                      FontWeight="Bold"
+                                      Foreground="{StaticResource TextPrimaryBrush}"
+                                      Margin="0,5,0,0"/>
+                            <ProgressBar x:Name="EpochProgressBar"
+                                        Height="8" 
+                                        Value="0" 
+                                        Maximum="100"
+                                        Margin="0,10,0,0"/>
+                        </StackPanel>
+                        
+                        <!-- Training Loss -->
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Training Loss" 
+                                      FontSize="12" 
+                                      Foreground="{StaticResource TextSecondaryBrush}"/>
+                            <TextBlock x:Name="TrainLossText"
+                                      Text="Loading..." 
+                                      FontSize="24" 
+                                      FontWeight="Bold"
+                                      Foreground="{StaticResource PrimaryBrush}"
+                                      Margin="0,5,0,0"/>
+                        </StackPanel>
+                        
+                        <!-- Training Accuracy -->
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Training Accuracy" 
+                                      FontSize="12" 
+                                      Foreground="{StaticResource TextSecondaryBrush}"/>
+                            <TextBlock x:Name="TrainAccText"
+                                      Text="Loading..." 
+                                      FontSize="24" 
+                                      FontWeight="Bold"
+                                      Foreground="{StaticResource AccentBrush}"
+                                      Margin="0,5,0,0"/>
+                        </StackPanel>
+                        
+                        <!-- ETA -->
+                        <StackPanel Grid.Column="3">
+                            <TextBlock Text="Estimated Time" 
+                                      FontSize="12" 
+                                      Foreground="{StaticResource TextSecondaryBrush}"/>
+                            <TextBlock x:Name="ETAText"
+                                      Text="Loading..." 
+                                      FontSize="24" 
+                                      FontWeight="Bold"
+                                      Foreground="{StaticResource TextPrimaryBrush}"
+                                      Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                
+                <!-- Charts -->
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <!-- Loss Chart -->
+                    <Border Grid.Column="0" Style="{StaticResource Card}" Margin="0,0,10,0">
+                        <StackPanel>
+                            <TextBlock Text="Loss" 
+                                      FontSize="16" 
+                                      FontWeight="SemiBold"
+                                      Foreground="{StaticResource TextPrimaryBrush}"
+                                      Margin="0,0,0,10"/>
+                            <lvc:CartesianChart x:Name="LossChart" 
+                                              Height="220"/>
+                        </StackPanel>
+                    </Border>
+                    
+                    <!-- Accuracy Chart -->
+                    <Border Grid.Column="1" Style="{StaticResource Card}" Margin="10,0,0,0">
+                        <StackPanel>
+                            <TextBlock Text="Accuracy" 
+                                      FontSize="16" 
+                                      FontWeight="SemiBold"
+                                      Foreground="{StaticResource TextPrimaryBrush}"
+                                      Margin="0,0,0,10"/>
+                            <lvc:CartesianChart x:Name="AccuracyChart" 
+                                              Height="220"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+                
+                <!-- Metrics Grid -->
+                <Border Grid.Row="2" Style="{StaticResource Card}" Margin="0,20,0,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Learning Rate" 
+                                      FontSize="14" 
+                                      Foreground="{StaticResource TextSecondaryBrush}"/>
+                            <TextBlock x:Name="LearningRateText"
+                                      Text="0.001" 
+                                      FontSize="18" 
+                                      FontWeight="SemiBold"
+                                      Foreground="{StaticResource TextPrimaryBrush}"
+                                      Margin="0,5,0,0"/>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="Batch Speed" 
+                                      FontSize="14" 
+                                      Foreground="{StaticResource TextSecondaryBrush}"/>
+                            <TextBlock x:Name="BatchSpeedText"
+                                      Text="45 samples/sec" 
+                                      FontSize="18" 
+                                      FontWeight="SemiBold"
+                                      Foreground="{StaticResource TextPrimaryBrush}"
+                                      Margin="0,5,0,0"/>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Best Accuracy" 
+                                      FontSize="14" 
+                                      Foreground="{StaticResource TextSecondaryBrush}"/>
+                            <TextBlock x:Name="BestAccText"
+                                      Text="96.54%" 
+                                      FontSize="18" 
+                                      FontWeight="SemiBold"
+                                      Foreground="{StaticResource AccentBrush}"
+                                      Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                
+                <!-- Training Logs -->
+                <Border Grid.Row="3" Style="{StaticResource Card}">
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Top"
+                                  Text="Training Logs" 
+                                  FontSize="16" 
+                                  FontWeight="SemiBold"
+                                  Foreground="{StaticResource TextPrimaryBrush}"
+                                  Margin="0,0,0,10"/>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <TextBox x:Name="LogsTextBox"
+                                    IsReadOnly="True"
+                                    TextWrapping="Wrap"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    FontFamily="Consolas"
+                                    FontSize="11"
+                                    Foreground="{StaticResource TextSecondaryBrush}"/>
+                        </ScrollViewer>
+                    </DockPanel>
+                </Border>
+            </Grid>
+        </ScrollViewer>
+        
+        <!-- Status Bar -->
+        <Border Grid.Row="2" 
+               Background="{StaticResource SurfaceBrush}"
+               BorderBrush="{StaticResource BorderBrush}"
+               BorderThickness="0,1,0,0"
+               Padding="30,10">
+            <Grid>
+                <TextBlock x:Name="StatusText"
+                          Text="Training in progress..."
+                          FontSize="12"
+                          Foreground="{StaticResource TextSecondaryBrush}"
+                          VerticalAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock Text="GPU: NVIDIA RTX 3080 | Memory: 8.5 / 10 GB"
+                              FontSize="11"
+                              Foreground="{StaticResource TextSecondaryBrush}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>
+

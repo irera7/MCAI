@@ -1,0 +1,213 @@
+<Page x:Class="ModelCreator.UI.Views.TimeSeriesProjectPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Time Series Project">
+
+    <Grid Margin="20">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBlock Text="📈 Time Series Forecasting" FontSize="28" FontWeight="Bold" 
+                           Foreground="{DynamicResource PrimaryBrush}" Margin="0,0,0,5"/>
+                <TextBlock Text="Forecast future values with advanced preprocessing options" 
+                           FontSize="14" Opacity="0.7" Margin="0,0,0,20"/>
+
+                <!-- Project Info -->
+                <Border Background="{DynamicResource CardBackgroundBrush}" CornerRadius="8" Padding="20" Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="Project Information" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                        <TextBlock Text="Project Name:" Margin="0,0,0,5"/>
+                        <TextBox x:Name="ProjectNameTextBox" Padding="8" Margin="0,0,0,10"/>
+                        <TextBlock Text="Series Type:" Margin="0,0,0,5"/>
+                        <ComboBox x:Name="SeriesTypeComboBox" Padding="8" SelectedIndex="0">
+                            <ComboBoxItem Content="Univariate (Single variable)"/>
+                            <ComboBoxItem Content="Multivariate (Multiple variables)"/>
+                        </ComboBox>
+                    </StackPanel>
+                </Border>
+
+                <!-- Data Upload -->
+                <Border Background="{DynamicResource CardBackgroundBrush}" CornerRadius="8" Padding="20" Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="Data Upload" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                        <TextBlock TextWrapping="Wrap" Opacity="0.8" Margin="0,0,0,10">
+                            Upload CSV with:
+                            <LineBreak/>• 'date' or 'timestamp' column
+                            <LineBreak/>• Value column(s)
+                            <LineBreak/>• Ordered by time
+                        </TextBlock>
+                        <Button x:Name="UploadDataButton" Content="📁 Upload Time Series Data" Padding="15,10" 
+                                Click="UploadDataButton_Click"
+                                Background="{DynamicResource PrimaryBrush}" Foreground="White" 
+                                FontWeight="SemiBold" Cursor="Hand"/>
+                        <TextBlock x:Name="DataStatusTextBlock" Margin="0,10,0,0" 
+                                   Foreground="Green" FontWeight="SemiBold"/>
+                        
+                        <!-- Data Statistics -->
+                        <Border x:Name="TimeSeriesStatsPanel" Visibility="Collapsed" 
+                                BorderBrush="#DDD" BorderThickness="1" 
+                                CornerRadius="6" Padding="12" Margin="0,10,0,0" Background="#F9F9F9">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Time Points:" FontSize="10" Opacity="0.7"/>
+                                    <TextBlock x:Name="TimePointsText" Text="-" FontWeight="SemiBold"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="Variables:" FontSize="10" Opacity="0.7"/>
+                                    <TextBlock x:Name="VariablesText" Text="-" FontWeight="SemiBold"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Frequency:" FontSize="10" Opacity="0.7"/>
+                                    <TextBlock x:Name="FrequencyText" Text="-" FontWeight="SemiBold"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </Border>
+                
+                <!-- Preprocessing Options -->
+                <Border Background="{DynamicResource CardBackgroundBrush}" CornerRadius="8" Padding="20" Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="⚙️ Preprocessing Options" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                        
+                        <TextBlock Text="Task Type:" Margin="0,0,0,5"/>
+                        <ComboBox x:Name="TaskTypeComboBox" Padding="8" Margin="0,0,0,10" SelectedIndex="0">
+                            <ComboBoxItem Content="Forecasting (Predict future values)"/>
+                            <ComboBoxItem Content="Classification (Pattern recognition)"/>
+                            <ComboBoxItem Content="Anomaly Detection"/>
+                        </ComboBox>
+
+                        <CheckBox x:Name="DetrendCheckBox" Content="Remove Trend" 
+                                  Margin="0,5,0,3"/>
+                        <TextBlock Text="Removes long-term trends from data" 
+                                   Opacity="0.6" Margin="20,0,0,8" FontSize="11"/>
+
+                        <CheckBox x:Name="DeseasonalizeCheckBox" Content="Remove Seasonality" 
+                                  Margin="0,0,0,3"/>
+                        <TextBlock Text="Removes periodic patterns (daily, weekly, yearly)" 
+                                   Opacity="0.6" Margin="20,0,0,8" FontSize="11"/>
+
+                        <CheckBox x:Name="DifferencingCheckBox" Content="Apply Differencing" 
+                                  Margin="0,0,0,3"/>
+                        <TextBlock Text="Makes series stationary by computing differences" 
+                                   Opacity="0.6" Margin="20,0,0,8" FontSize="11"/>
+
+                        <CheckBox x:Name="NormalizeCheckBox" Content="Normalize Values" 
+                                  IsChecked="True" Margin="0,0,0,3"/>
+                        <TextBlock Text="Scales values to 0-1 range for better training" 
+                                   Opacity="0.6" Margin="20,0,0,8" FontSize="11"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Model Selection -->
+                <Border Background="{DynamicResource CardBackgroundBrush}" CornerRadius="8" Padding="20" Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="Model Selection" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                        
+                        <RadioButton x:Name="LSTMRadio" Content="LSTM - Long Short-Term Memory" 
+                                     GroupName="TSModels" IsChecked="True" Margin="0,0,0,10"/>
+                        <TextBlock Text="Deep learning model, learns long-term dependencies" 
+                                   Opacity="0.7" Margin="25,0,0,15" FontSize="12"/>
+
+                        <RadioButton x:Name="GRURadio" Content="GRU - Gated Recurrent Unit" 
+                                     GroupName="TSModels" Margin="0,0,0,10"/>
+                        <TextBlock Text="Similar to LSTM but faster" 
+                                   Opacity="0.7" Margin="25,0,0,15" FontSize="12"/>
+
+                        <RadioButton x:Name="AttentionLSTMRadio" Content="Attention-LSTM" 
+                                     GroupName="TSModels" Margin="0,0,0,10"/>
+                        <TextBlock Text="LSTM with attention mechanism for better accuracy" 
+                                   Opacity="0.7" Margin="25,0,0,15" FontSize="12"/>
+
+                        <RadioButton x:Name="ProphetRadio" Content="Prophet - Facebook's Forecasting Tool" 
+                                     GroupName="TSModels" Margin="0,0,0,10"/>
+                        <TextBlock Text="Best for business time series with seasonality" 
+                                   Opacity="0.7" Margin="25,0,0,15" FontSize="12"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Forecasting Config -->
+                <Border Background="{DynamicResource CardBackgroundBrush}" CornerRadius="8" Padding="20" Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="🎯 Model Configuration" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="15"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="15"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <StackPanel Grid.Row="0" Grid.Column="0">
+                                <TextBlock Text="Sequence Length:" Margin="0,0,0,5"/>
+                                <TextBox x:Name="SequenceLengthTextBox" Text="100" Padding="8"/>
+                                <TextBlock Text="Past time steps to use" FontSize="10" Opacity="0.6" Margin="0,2,0,0"/>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Row="0" Grid.Column="2">
+                                <TextBlock Text="Forecast Horizon:" Margin="0,0,0,5"/>
+                                <TextBox x:Name="ForecastHorizonTextBox" Text="24" Padding="8"/>
+                                <TextBlock Text="Future steps to predict" FontSize="10" Opacity="0.6" Margin="0,2,0,0"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="2" Grid.Column="0">
+                                <TextBlock Text="Hidden Units:" Margin="0,0,0,5"/>
+                                <ComboBox x:Name="HiddenUnitsComboBox" Padding="8" SelectedIndex="1">
+                                    <ComboBoxItem Content="64"/>
+                                    <ComboBoxItem Content="128"/>
+                                    <ComboBoxItem Content="256"/>
+                                    <ComboBoxItem Content="512"/>
+                                </ComboBox>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Row="2" Grid.Column="2">
+                                <TextBlock Text="Number of Layers:" Margin="0,0,0,5"/>
+                                <ComboBox x:Name="NumLayersComboBox" Padding="8" SelectedIndex="1">
+                                    <ComboBoxItem Content="1 layer"/>
+                                    <ComboBoxItem Content="2 layers"/>
+                                    <ComboBoxItem Content="3 layers"/>
+                                </ComboBox>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="4" Grid.Column="0">
+                                <TextBlock Text="Learning Rate:" Margin="0,0,0,5"/>
+                                <TextBox x:Name="LearningRateTextBox" Text="0.001" Padding="8"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="4" Grid.Column="2">
+                                <TextBlock Text="Batch Size:" Margin="0,0,0,5"/>
+                                <ComboBox x:Name="BatchSizeComboBox" Padding="8" SelectedIndex="1">
+                                    <ComboBoxItem Content="16"/>
+                                    <ComboBoxItem Content="32"/>
+                                    <ComboBoxItem Content="64"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Buttons -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="CreateProjectButton" Content="✅ Create TimeSeries Project" 
+                            Padding="20,12" Click="CreateProjectButton_Click"
+                            Background="{DynamicResource SuccessBrush}" Foreground="White" 
+                            FontSize="14" FontWeight="SemiBold" Cursor="Hand" Margin="0,0,10,0"/>
+                    <Button Content="❌ Cancel" Padding="20,12" Click="CancelButton_Click"
+                            Background="{DynamicResource DangerBrush}" Foreground="White" 
+                            FontSize="14" Cursor="Hand"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
+

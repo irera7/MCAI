@@ -1,0 +1,246 @@
+<Page x:Class="ModelCreator.UI.Views.ModelServingPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      d:DesignHeight="850" d:DesignWidth="1200"
+      Title="Model Serving">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="🚀 Model Serving - Deploy &amp; Manage Models" 
+                       FontSize="28" FontWeight="Bold" 
+                       Foreground="{DynamicResource PrimaryBrush}"/>
+            <TextBlock Text="Load trained models and serve them via REST API for real-time inference" 
+                       FontSize="14" Opacity="0.7" Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Panel - Model Registry -->
+            <StackPanel Grid.Column="0">
+                <!-- Available Models -->
+                <Border Background="{DynamicResource CardBackgroundBrush}" 
+                        CornerRadius="8" Padding="20" Margin="0,0,0,15">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,15">
+                            <TextBlock Text="📦 Available Models" 
+                                       FontSize="18" FontWeight="SemiBold" 
+                                       VerticalAlignment="Center"/>
+                            <Button x:Name="RefreshModelsButton" 
+                                    Content="🔄 Refresh" 
+                                    HorizontalAlignment="Right"
+                                    Padding="10,5"
+                                    Click="RefreshModelsButton_Click"/>
+                        </Grid>
+
+                        <ListView x:Name="AvailableModelsListView" 
+                                  Height="250"
+                                  SelectionMode="Single"
+                                  SelectionChanged="AvailableModelsListView_SelectionChanged">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="#E0E0E0" BorderThickness="1" 
+                                            CornerRadius="6" Padding="12" Margin="0,4">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0">
+                                                <TextBlock Text="{Binding Name}" FontWeight="SemiBold" FontSize="13"/>
+                                                <TextBlock Text="{Binding ProjectId}" FontSize="10" Opacity="0.6"/>
+                                                <TextBlock Text="{Binding Modality}" FontSize="10" Opacity="0.6"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Size}" FontSize="10" Opacity="0.7"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                        <Button x:Name="LoadModelButton" 
+                                Content="⬆️ Load Selected Model" 
+                                Padding="12,8" Margin="0,10,0,0"
+                                Click="LoadModelButton_Click"
+                                Background="{DynamicResource SuccessBrush}"
+                                Foreground="White" FontWeight="SemiBold"
+                                IsEnabled="False"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Model Configuration -->
+                <Border Background="{DynamicResource CardBackgroundBrush}" 
+                        CornerRadius="8" Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="⚙️ Load Configuration" 
+                                   FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+
+                        <TextBlock Text="Device:" Margin="0,0,0,5"/>
+                        <ComboBox x:Name="DeviceComboBox" Padding="8" Margin="0,0,0,10" SelectedIndex="0">
+                            <ComboBoxItem Content="CUDA (GPU)"/>
+                            <ComboBoxItem Content="CPU"/>
+                        </ComboBox>
+
+                        <TextBlock Text="Batch Size:" Margin="0,0,0,5"/>
+                        <TextBox x:Name="BatchSizeTextBox" Text="1" Padding="8" Margin="0,0,0,10"/>
+
+                        <CheckBox x:Name="WarmupCheckBox" Content="Warm-up model after loading" 
+                                  IsChecked="True" Margin="0,5"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- Right Panel - Loaded Models & Testing -->
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Loaded Models -->
+                <Border Grid.Row="0" Background="{DynamicResource CardBackgroundBrush}" 
+                        CornerRadius="8" Padding="20">
+                    <StackPanel>
+                        <Grid Margin="0,0,0,15">
+                            <TextBlock Text="✅ Loaded Models" 
+                                       FontSize="18" FontWeight="SemiBold" 
+                                       VerticalAlignment="Center"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <TextBlock x:Name="LoadedCountText" Text="0 models" 
+                                           VerticalAlignment="Center" Margin="0,0,10,0"
+                                           FontSize="12" Opacity="0.7"/>
+                                <Button x:Name="UnloadAllButton" 
+                                        Content="🗑️ Unload All" 
+                                        Padding="8,4"
+                                        Click="UnloadAllButton_Click"
+                                        Background="{DynamicResource DangerBrush}"
+                                        Foreground="White"
+                                        IsEnabled="False"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <DataGrid x:Name="LoadedModelsGrid" 
+                                  AutoGenerateColumns="False" 
+                                  Height="200"
+                                  IsReadOnly="True"
+                                  HeadersVisibility="Column"
+                                  SelectionMode="Single">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Model ID" Binding="{Binding ModelId}" Width="120"/>
+                                <DataGridTextColumn Header="Type" Binding="{Binding ModelType}" Width="80"/>
+                                <DataGridTextColumn Header="Device" Binding="{Binding Device}" Width="60"/>
+                                <DataGridTextColumn Header="Memory (MB)" Binding="{Binding MemoryMB}" Width="90"/>
+                                <DataGridTextColumn Header="Requests" Binding="{Binding RequestCount}" Width="70"/>
+                                <DataGridTextColumn Header="Avg Latency (ms)" Binding="{Binding AvgLatency}" Width="110"/>
+                                <DataGridTemplateColumn Header="Actions" Width="100">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="Unload" 
+                                                    Tag="{Binding ModelId}"
+                                                    Click="UnloadModelButton_Click"
+                                                    Padding="6,2" FontSize="10"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <Button x:Name="RefreshLoadedButton" 
+                                Content="🔄 Refresh Status" 
+                                Padding="10,6" Margin="0,10,0,0"
+                                Click="RefreshLoadedButton_Click"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Test Inference -->
+                <Border Grid.Row="2" Background="{DynamicResource CardBackgroundBrush}" 
+                        CornerRadius="8" Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="🧪 Test Inference" 
+                                   FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+
+                        <TextBlock Text="Select Loaded Model:" Margin="0,0,0,5"/>
+                        <ComboBox x:Name="TestModelComboBox" 
+                                  Padding="8" Margin="0,0,0,10"
+                                  DisplayMemberPath="ModelId"/>
+
+                        <TextBlock Text="Upload Test File:" Margin="0,0,0,5"/>
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="TestFilePathTextBox" 
+                                     Padding="8" IsReadOnly="True" 
+                                     Background="#F5F5F5"/>
+                            <Button Grid.Column="2" Content="📁 Browse" 
+                                    Padding="12,8"
+                                    Click="BrowseTestFileButton_Click"/>
+                        </Grid>
+
+                        <Button x:Name="RunInferenceButton" 
+                                Content="▶️ Run Inference" 
+                                Padding="12,8" Margin="0,0,0,10"
+                                Click="RunInferenceButton_Click"
+                                Background="{DynamicResource PrimaryBrush}"
+                                Foreground="White" FontWeight="SemiBold"
+                                IsEnabled="False"/>
+
+                        <Border BorderBrush="#DDD" BorderThickness="1" 
+                                CornerRadius="6" Padding="12" Background="#F9F9F9">
+                            <StackPanel>
+                                <TextBlock Text="📊 Inference Result:" 
+                                           FontWeight="SemiBold" Margin="0,0,0,8"/>
+                                <TextBlock x:Name="InferenceResultText" 
+                                           Text="No results yet" 
+                                           TextWrapping="Wrap" FontFamily="Consolas" FontSize="11"/>
+                                <Grid Margin="0,8,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="⏱️ Latency:" FontSize="10" Opacity="0.7"/>
+                                        <TextBlock x:Name="LatencyText" Text="-" FontWeight="SemiBold"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="🎯 Confidence:" FontSize="10" Opacity="0.7"/>
+                                        <TextBlock x:Name="ConfidenceText" Text="-" FontWeight="SemiBold"/>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <TextBlock Text="💡 API Endpoint:" 
+                                   FontWeight="SemiBold" Margin="0,15,0,5" FontSize="12"/>
+                        <Border BorderBrush="#DDD" BorderThickness="1" 
+                                CornerRadius="4" Padding="8" Background="#F5F5F5">
+                            <TextBlock x:Name="ApiEndpointText" 
+                                       Text="POST http://127.0.0.1:8181/api/serve/predict/{model_id}" 
+                                       FontFamily="Consolas" FontSize="10"
+                                       TextWrapping="Wrap"/>
+                        </Border>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

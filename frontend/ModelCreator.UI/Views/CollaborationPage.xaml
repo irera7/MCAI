@@ -1,0 +1,49 @@
+<Page x:Class="ModelCreator.UI.Views.CollaborationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Collaboration">
+
+    <Grid Margin="20">
+        <TabControl>
+            <!-- Users Tab -->
+            <TabItem Header="👥 Users">
+                <StackPanel Margin="20">
+                    <TextBlock Text="User Management" FontSize="22" FontWeight="Bold" Margin="0,0,0,20"/>
+                    <Button Content="➕ Add New User" Padding="15,10" Click="AddUserButton_Click"
+                            Background="{DynamicResource PrimaryBrush}" Foreground="White" 
+                            FontWeight="SemiBold" Cursor="Hand" Margin="0,0,0,15"/>
+                    <DataGrid x:Name="UsersDataGrid" AutoGenerateColumns="True" 
+                              Height="400" IsReadOnly="True"/>
+                </StackPanel>
+            </TabItem>
+
+            <!-- Teams Tab -->
+            <TabItem Header="🏢 Teams">
+                <StackPanel Margin="20">
+                    <TextBlock Text="Team Management" FontSize="22" FontWeight="Bold" Margin="0,0,0,20"/>
+                    <Button Content="➕ Create Team" Padding="15,10" Click="CreateTeamButton_Click"
+                            Background="{DynamicResource PrimaryBrush}" Foreground="White" 
+                            FontWeight="SemiBold" Cursor="Hand" Margin="0,0,0,15"/>
+                    <DataGrid x:Name="TeamsDataGrid" AutoGenerateColumns="True" 
+                              Height="400" IsReadOnly="True"/>
+                </StackPanel>
+            </TabItem>
+
+            <!-- Permissions Tab -->
+            <TabItem Header="🔐 Permissions">
+                <StackPanel Margin="20">
+                    <TextBlock Text="Project Permissions" FontSize="22" FontWeight="Bold" Margin="0,0,0,20"/>
+                    <TextBlock Text="Select Project:" Margin="0,0,0,5"/>
+                    <ComboBox x:Name="ProjectsComboBox" Padding="8" Margin="0,0,0,15"/>
+                    <TextBlock Text="Members:" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                    <DataGrid x:Name="MembersDataGrid" AutoGenerateColumns="True" 
+                              Height="300" IsReadOnly="True"/>
+                    <Button Content="➕ Add Member" Padding="15,10" Click="AddMemberButton_Click"
+                            Background="{DynamicResource SuccessBrush}" Foreground="White" 
+                            FontWeight="SemiBold" Cursor="Hand" Margin="0,15,0,0"/>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>
+

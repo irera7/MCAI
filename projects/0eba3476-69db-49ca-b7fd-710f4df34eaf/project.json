@@ -1,0 +1,30 @@
+{
+  "id": "0eba3476-69db-49ca-b7fd-710f4df34eaf",
+  "name": "test12",
+  "modality": "image",
+  "description": "",
+  "model_type": null,
+  "created_at": "2025-12-03T15:08:41.498668",
+  "updated_at": "2025-12-03T15:08:41.498668",
+  "status": "new",
+  "data": {
+    "path": "./data",
+    "num_classes": 0,
+    "class_labels": [],
+    "train_size": 0,
+    "val_size": 0,
+    "test_size": 0
+  },
+  "training": {
+    "epochs": 50,
+    "batch_size": 32,
+    "learning_rate": 0.001,
+    "optimizer": "adam",
+    "device": "cuda",
+    "use_augmentation": true,
+    "dropout": 0.2,
+    "weight_decay": 0.0001
+  },
+  "model_path": null,
+  "metrics": {}
+}

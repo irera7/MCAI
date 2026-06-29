@@ -1,0 +1,317 @@
+<Page x:Class="ModelCreator.UI.Views.ModelComparisonPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Model Comparison"
+      Background="{StaticResource BackgroundBrush}">
+
+    <Grid Margin="30,20">
+        <Grid.Resources>
+            <Style x:Key="GridCell" TargetType="TextBlock">
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+        </Grid.Resources>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel MaxWidth="1400">
+                
+                <!-- Header -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                    <TextBlock Text="📊 " FontSize="32"/>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="Model Comparison" 
+                                  FontSize="28" 
+                                  FontWeight="Bold"
+                                  Foreground="{StaticResource TextPrimaryBrush}"/>
+                        <TextBlock Text="Compare multiple trained models side-by-side" 
+                                  FontSize="14" 
+                                  Foreground="{StaticResource TextSecondaryBrush}"
+                                  Margin="0,5,0,0"/>
+                    </StackPanel>
+                    <Button x:Name="RefreshButton"
+                           Content="🔄 Refresh"
+                           Width="100"
+                           Height="35"
+                           Margin="20,0,0,0"
+                           Click="RefreshButton_Click"
+                           VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Loading Panel -->
+                <Border x:Name="LoadingPanel"
+                       Style="{StaticResource Card}"
+                       Padding="40"
+                       HorizontalAlignment="Center"
+                       Visibility="Visible">
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="⏳" FontSize="48" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Loading trained models..." 
+                                  FontSize="16" 
+                                  Margin="0,10,0,0"
+                                  HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Error Panel -->
+                <Border x:Name="ErrorPanel"
+                       Style="{StaticResource Card}"
+                       Padding="30"
+                       Background="#FEE"
+                       BorderBrush="#F88"
+                       Visibility="Collapsed">
+                    <StackPanel>
+                        <TextBlock x:Name="ErrorText"
+                                  FontSize="14"
+                                  TextWrapping="Wrap"
+                                  Foreground="#C00"/>
+                        <Button Content="🔄 Retry"
+                               Width="120"
+                               Margin="0,15,0,0"
+                               Click="RefreshButton_Click"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Content Panel -->
+                <StackPanel x:Name="ContentPanel" Visibility="Collapsed">
+                    
+                    <!-- Status Bar -->
+                    <Border Style="{StaticResource Card}" 
+                           Padding="15"
+                           Margin="0,0,0,15"
+                           Background="{StaticResource AccentBrush}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="ℹ️" FontSize="16" Margin="0,0,10,0"/>
+                            <TextBlock x:Name="StatusText"
+                                      Text="Loading..."
+                                      FontSize="13"
+                                      Foreground="White"
+                                      VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Project Selection -->
+                    <Border Style="{StaticResource Card}" Padding="20" Margin="0,0,0,15">
+                        <StackPanel>
+                            <TextBlock Text="1️⃣ Select Projects to Compare" 
+                                      FontSize="18" 
+                                      FontWeight="SemiBold" 
+                                      Margin="0,0,0,10"/>
+                            <TextBlock Text="Select multiple trained projects (hold Ctrl/Shift)"
+                                      FontSize="12"
+                                      Foreground="{StaticResource TextSecondaryBrush}"
+                                      Margin="0,0,0,15"/>
+                            
+                            <ListBox x:Name="ProjectsListBox"
+                                    SelectionMode="Extended"
+                                    Height="250"
+                                    SelectionChanged="ProjectsListBox_SelectionChanged">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Padding="12,10"
+                                               Background="{StaticResource CardBackgroundBrush}"
+                                               Margin="0,2">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                
+                                                <StackPanel Grid.Column="0">
+                                                    <TextBlock Text="{Binding ProjectName}" 
+                                                              FontWeight="SemiBold"
+                                                              FontSize="14"/>
+                                                    <TextBlock FontSize="12"
+                                                              Foreground="{StaticResource TextSecondaryBrush}"
+                                                              Margin="0,2,0,0">
+                                                        <Run Text="{Binding ModelArchitecture}"/>
+                                                        <Run Text=" • "/>
+                                                        <Run Text="{Binding TotalEpochs}"/>
+                                                        <Run Text=" epochs • "/>
+                                                        <Run Text="{Binding TrainingDuration, StringFormat='{}{0:F1}s'}"/>
+                                                    </TextBlock>
+                                                </StackPanel>
+                                                
+                                                <Border Grid.Column="1"
+                                                       Background="#E3F2FD"
+                                                       CornerRadius="4"
+                                                       Padding="8,4"
+                                                       Margin="0,0,10,0"
+                                                       VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding Modality}" 
+                                                              FontSize="11" 
+                                                              FontWeight="SemiBold"
+                                                              Foreground="#1976D2"/>
+                                                </Border>
+                                                
+                                                <Border Grid.Column="2"
+                                                       Background="{StaticResource SuccessBrush}"
+                                                       CornerRadius="4"
+                                                       Padding="10,4"
+                                                       VerticalAlignment="Center">
+                                                    <TextBlock FontSize="13" 
+                                                              FontWeight="Bold"
+                                                              Foreground="White">
+                                                        <Run Text="{Binding BestAccuracy, StringFormat='{}{0:F2}%'}"/>
+                                                    </TextBlock>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+
+                            <!-- Selection Status -->
+                            <Border Padding="10"
+                                   Margin="0,10,0,0"
+                                   Background="#F5F5F5"
+                                   CornerRadius="4">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock x:Name="SelectedCountText"
+                                              Text="0 projects selected"
+                                              FontSize="12"
+                                              Margin="0,0,15,0"/>
+                                    <TextBlock x:Name="ValidationText"
+                                              Text="⚠️ Select at least 2 projects"
+                                              FontSize="12"
+                                              Foreground="Orange"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Action Buttons -->
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Button x:Name="CompareButton" 
+                               Grid.Column="0"
+                               Content="📊 Compare Selected" 
+                               Height="45"
+                               FontSize="15" 
+                               FontWeight="SemiBold" 
+                               Click="CompareButton_Click"
+                               IsEnabled="False"
+                               Margin="0,0,10,0"
+                               Cursor="Hand"/>
+                        
+                        <Button x:Name="ExportCSVButton"
+                               Grid.Column="1"
+                               Content="📄 Export CSV"
+                               Height="45"
+                               Width="150"
+                               FontSize="14"
+                               Click="ExportCSVButton_Click"
+                               Cursor="Hand"/>
+                    </Grid>
+
+                    <!-- Results Panel -->
+                    <StackPanel x:Name="ResultsPanel" Visibility="Collapsed">
+                        
+                        <!-- Statistics Summary -->
+                        <Border x:Name="StatsPanel"
+                               Style="{StaticResource Card}"
+                               Padding="20"
+                               Margin="0,0,0,15"
+                               Background="#F0F8FF"
+                               Visibility="Collapsed">
+                            <StackPanel>
+                                <TextBlock Text="📈 Comparison Statistics" 
+                                          FontSize="16" 
+                                          FontWeight="SemiBold"
+                                          Margin="0,0,0,15"/>
+                                
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    
+                                    <TextBlock x:Name="BestModelText" 
+                                              Grid.Row="0" Grid.Column="0"
+                                              FontSize="13" 
+                                              Margin="0,0,0,8"/>
+                                    <TextBlock x:Name="AvgAccuracyText" 
+                                              Grid.Row="0" Grid.Column="1"
+                                              FontSize="13" 
+                                              Margin="0,0,0,8"/>
+                                    <TextBlock x:Name="StdAccuracyText" 
+                                              Grid.Row="1" Grid.Column="0"
+                                              FontSize="13"/>
+                                    <TextBlock x:Name="FastestText" 
+                                              Grid.Row="1" Grid.Column="1"
+                                              FontSize="13"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Comparison Table -->
+                        <Border Style="{StaticResource Card}" Padding="20" Margin="0,0,0,15">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                                    <TextBlock Text="📋 Detailed Comparison" 
+                                              FontSize="16" 
+                                              FontWeight="SemiBold"
+                                              VerticalAlignment="Center"/>
+                                    <Button x:Name="ClearButton"
+                                           Content="🗑️ Clear"
+                                           Width="100"
+                                           Height="30"
+                                           Margin="15,0,0,0"
+                                           Click="ClearButton_Click"/>
+                                </StackPanel>
+                                
+                                <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                                    <Grid x:Name="ComparisonGrid" ShowGridLines="True">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="200"/>
+                                            <ColumnDefinition Width="150"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="100"/>
+                                            <ColumnDefinition Width="100"/>
+                                        </Grid.ColumnDefinitions>
+                                        <!-- Rows will be added dynamically -->
+                                    </Grid>
+                                </ScrollViewer>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Info -->
+                        <Border Background="#FFF3E0"
+                               BorderBrush="#FF9800"
+                               BorderThickness="1"
+                               CornerRadius="6"
+                               Padding="15">
+                            <StackPanel>
+                                <TextBlock Text="💡 Interpretation" 
+                                          FontSize="14" 
+                                          FontWeight="SemiBold"
+                                          Foreground="#E65100"
+                                          Margin="0,0,0,8"/>
+                                <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="#555">
+                                    <Run Text="• Higher accuracy indicates better model performance"/>
+                                    <LineBreak/>
+                                    <Run Text="• Lower loss indicates better optimization"/>
+                                    <LineBreak/>
+                                    <Run Text="• Shorter training duration is more efficient"/>
+                                    <LineBreak/>
+                                    <Run Text="• Standard deviation shows consistency across models"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

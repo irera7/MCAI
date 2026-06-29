@@ -1,0 +1,45 @@
+# Optional Dependencies for AI Model Builder
+
+# These are optional packages that provide additional functionality
+# Install only if you need the specific features
+
+# ONNX Runtime for ONNX model inference
+# Note: May not be available for all Python versions/platforms
+# onnxruntime>=1.15.0
+
+# TensorFlow for TFLite export
+# tensorflow>=2.13.0
+
+# Cloud training providers
+# boto3>=1.28.0  # For AWS
+# azure-ai-ml>=1.8.0  # For Azure
+# google-cloud-aiplatform>=1.25.0  # For GCP
+
+# Audio processing with librosa (requires Python 3.10-3.13)
+# librosa>=0.10.0
+# numba>=0.57.0
+
+# Advanced audio processing
+# pydub>=0.25.0
+# audioread>=3.0.0
+
+# Advanced video processing
+# moviepy>=1.0.3
+# imageio-ffmpeg>=0.4.8
+
+# Jupyter notebook support
+# jupyter>=1.0.0
+# ipywidgets>=8.0.0
+
+# Development tools
+# black>=23.0.0  # Code formatter
+# flake8>=6.0.0  # Linter
+# mypy>=1.4.0  # Type checker
+
+# Installation instructions:
+# pip install -r requirements-optional.txt
+
+# Or install specific packages:
+# pip install onnxruntime  # For ONNX inference
+# pip install tensorflow  # For TFLite export
+

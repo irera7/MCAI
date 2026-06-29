@@ -1,0 +1,208 @@
+<Page x:Class="ModelCreator.UI.Views.TabularProjectPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Tabular Data Project">
+
+    <Grid Margin="20">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBlock Text="📊 Tabular Data Project" FontSize="28" FontWeight="Bold" 
+                           Foreground="{DynamicResource PrimaryBrush}" Margin="0,0,0,5"/>
+                <TextBlock Text="Train models on structured/tabular data with advanced preprocessing" 
+                           FontSize="14" Opacity="0.7" Margin="0,0,0,20"/>
+
+                <!-- Project Info -->
+                <Border Background="{DynamicResource CardBackgroundBrush}" CornerRadius="8" Padding="20" Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="Project Information" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                        <TextBlock Text="Project Name:" Margin="0,0,0,5"/>
+                        <TextBox x:Name="ProjectNameTextBox" Padding="8" Margin="0,0,0,10"/>
+                        <TextBlock Text="Task Type:" Margin="0,0,0,5"/>
+                        <ComboBox x:Name="TaskTypeComboBox" Padding="8" SelectedIndex="0">
+                            <ComboBoxItem Content="Classification"/>
+                            <ComboBoxItem Content="Regression"/>
+                        </ComboBox>
+                    </StackPanel>
+                </Border>
+
+                <!-- Data Upload -->
+                <Border Background="{DynamicResource CardBackgroundBrush}" CornerRadius="8" Padding="20" Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="Data Upload &amp; Preview" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                        <TextBlock TextWrapping="Wrap" Opacity="0.8" Margin="0,0,0,10">
+                            Upload CSV or Excel file with:
+                            <LineBreak/>• Features in columns
+                            <LineBreak/>• Target variable in last column
+                        </TextBlock>
+                        <Button x:Name="UploadDataButton" Content="📁 Upload CSV/Excel" Padding="15,10" 
+                                Click="UploadDataButton_Click"
+                                Background="{DynamicResource PrimaryBrush}" Foreground="White" 
+                                FontWeight="SemiBold" Cursor="Hand"/>
+                        <TextBlock x:Name="DataStatusTextBlock" Margin="0,10,0,0" 
+                                   Foreground="Green" FontWeight="SemiBold"/>
+                        
+                        <!-- Data Statistics -->
+                        <Border x:Name="DataStatsPanel" Visibility="Collapsed" 
+                                BorderBrush="#DDD" BorderThickness="1" 
+                                CornerRadius="6" Padding="12" Margin="0,10,0,0" Background="#F9F9F9">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Rows:" FontSize="10" Opacity="0.7"/>
+                                    <TextBlock x:Name="RowCountText" Text="-" FontWeight="SemiBold"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="Features:" FontSize="10" Opacity="0.7"/>
+                                    <TextBlock x:Name="FeatureCountText" Text="-" FontWeight="SemiBold"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Numeric:" FontSize="10" Opacity="0.7"/>
+                                    <TextBlock x:Name="NumericCountText" Text="-" FontWeight="SemiBold"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="3">
+                                    <TextBlock Text="Categorical:" FontSize="10" Opacity="0.7"/>
+                                    <TextBlock x:Name="CategoricalCountText" Text="-" FontWeight="SemiBold"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </Border>
+                
+                <!-- Feature Engineering -->
+                <Border Background="{DynamicResource CardBackgroundBrush}" CornerRadius="8" Padding="20" Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="⚙️ Feature Engineering" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                        
+                        <TextBlock Text="Scaling Method:" Margin="0,0,0,5"/>
+                        <ComboBox x:Name="ScalingComboBox" Padding="8" Margin="0,0,0,10" SelectedIndex="0">
+                            <ComboBoxItem Content="Standard Scaling (mean=0, std=1)"/>
+                            <ComboBoxItem Content="Min-Max Scaling (0-1)"/>
+                            <ComboBoxItem Content="Robust Scaling (outlier resistant)"/>
+                            <ComboBoxItem Content="No Scaling"/>
+                        </ComboBox>
+
+                        <TextBlock Text="Missing Value Strategy:" Margin="0,0,0,5"/>
+                        <ComboBox x:Name="MissingValueComboBox" Padding="8" Margin="0,0,0,10" SelectedIndex="0">
+                            <ComboBoxItem Content="Mean Imputation"/>
+                            <ComboBoxItem Content="Median Imputation"/>
+                            <ComboBoxItem Content="Most Frequent"/>
+                            <ComboBoxItem Content="Drop Rows"/>
+                        </ComboBox>
+
+                        <TextBlock Text="Categorical Encoding:" Margin="0,0,0,5"/>
+                        <ComboBox x:Name="EncodingComboBox" Padding="8" Margin="0,0,0,10" SelectedIndex="0">
+                            <ComboBoxItem Content="One-Hot Encoding"/>
+                            <ComboBoxItem Content="Label Encoding"/>
+                            <ComboBoxItem Content="Target Encoding"/>
+                        </ComboBox>
+
+                        <CheckBox x:Name="FeatureSelectionCheckBox" Content="Enable Feature Selection (top-k features)" 
+                                  Margin="0,5,0,5"/>
+                        <Grid Margin="20,0,0,10" IsEnabled="{Binding IsChecked, ElementName=FeatureSelectionCheckBox}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Top Features:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <TextBox Grid.Column="1" x:Name="TopFeaturesTextBox" Text="10" Padding="5"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Model Selection -->
+                <Border Background="{DynamicResource CardBackgroundBrush}" CornerRadius="8" Padding="20" Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="Model Selection" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                        
+                        <RadioButton x:Name="XGBoostRadio" Content="XGBoost" GroupName="TabularModels" 
+                                     IsChecked="True" Margin="0,0,0,10"/>
+                        <TextBlock Text="Gradient boosting - Best for most tabular datasets" 
+                                   Opacity="0.7" Margin="25,0,0,15" FontSize="12"/>
+
+                        <RadioButton x:Name="LightGBMRadio" Content="LightGBM" GroupName="TabularModels" Margin="0,0,0,10"/>
+                        <TextBlock Text="Fast gradient boosting - Better for large datasets" 
+                                   Opacity="0.7" Margin="25,0,0,15" FontSize="12"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Training Config -->
+                <Border Background="{DynamicResource CardBackgroundBrush}" CornerRadius="8" Padding="20" Margin="0,0,0,15">
+                    <StackPanel>
+                        <TextBlock Text="🎯 Training Configuration" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="10"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="10"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            
+                            <StackPanel Grid.Row="0" Grid.Column="0">
+                                <TextBlock Text="Number of Trees:" Margin="0,0,0,5"/>
+                                <TextBox x:Name="NEstimatorsTextBox" Text="100" Padding="8"/>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Row="0" Grid.Column="2">
+                                <TextBlock Text="Max Depth:" Margin="0,0,0,5"/>
+                                <TextBox x:Name="MaxDepthTextBox" Text="6" Padding="8"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="2" Grid.Column="0">
+                                <TextBlock Text="Learning Rate:" Margin="0,0,0,5"/>
+                                <TextBox x:Name="LearningRateTextBox" Text="0.1" Padding="8"/>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Row="2" Grid.Column="2">
+                                <TextBlock Text="Subsample:" Margin="0,0,0,5"/>
+                                <TextBox x:Name="SubsampleTextBox" Text="0.8" Padding="8"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3">
+                                <TextBlock Text="Train/Val Split:" Margin="0,0,0,5"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="80%" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <Slider Grid.Column="1" x:Name="TrainValSplitSlider" 
+                                            Minimum="50" Maximum="90" Value="80" 
+                                            TickFrequency="5" IsSnapToTickEnabled="True"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding Value, ElementName=TrainValSplitSlider, StringFormat={}{0:F0}% train}" 
+                                               VerticalAlignment="Center" Margin="10,0,0,0"/>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+
+                        <CheckBox x:Name="EarlyStoppingCheckBox" Content="Enable Early Stopping" 
+                                  IsChecked="True" Margin="0,15,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Buttons -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="CreateProjectButton" Content="✅ Create Tabular Project" 
+                            Padding="20,12" Click="CreateProjectButton_Click"
+                            Background="{DynamicResource SuccessBrush}" Foreground="White" 
+                            FontSize="14" FontWeight="SemiBold" Cursor="Hand" Margin="0,0,10,0"/>
+                    <Button Content="❌ Cancel" Padding="20,12" Click="CancelButton_Click"
+                            Background="{DynamicResource DangerBrush}" Foreground="White" 
+                            FontSize="14" Cursor="Hand"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
+

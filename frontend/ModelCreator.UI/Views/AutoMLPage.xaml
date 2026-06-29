@@ -1,0 +1,283 @@
+<Page x:Class="ModelCreator.UI.Views.AutoMLPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      d:DesignHeight="850" d:DesignWidth="1000"
+      Title="AutoML">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="🤖 AutoML - Automated Hyperparameter Optimization" 
+                       FontSize="28" FontWeight="Bold" 
+                       Foreground="{DynamicResource PrimaryBrush}"/>
+            <TextBlock Text="Let AI find the best hyperparameters for your model automatically" 
+                       FontSize="14" Opacity="0.7" Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <!-- Main Content -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Left Panel - Configuration -->
+                <StackPanel Grid.Column="0">
+                    <!-- Project Selection -->
+                    <Border Background="{DynamicResource CardBackgroundBrush}" 
+                            CornerRadius="8" Padding="20" Margin="0,0,0,15">
+                        <StackPanel>
+                            <TextBlock Text="📁 Project Selection" 
+                                       FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+
+                            <TextBlock Text="Select Project:" Margin="0,0,0,5"/>
+                            <ComboBox x:Name="ProjectComboBox" Padding="8" Margin="0,0,0,10"
+                                      SelectionChanged="ProjectComboBox_SelectionChanged"/>
+
+                            <TextBlock x:Name="ProjectInfoText" TextWrapping="Wrap" 
+                                       Opacity="0.7" FontSize="11"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Search Configuration -->
+                    <Border Background="{DynamicResource CardBackgroundBrush}" 
+                            CornerRadius="8" Padding="20" Margin="0,0,0,15">
+                        <StackPanel>
+                            <TextBlock Text="⚙️ Search Configuration" 
+                                       FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+
+                            <TextBlock Text="Number of Trials:" Margin="0,0,0,5"/>
+                            <TextBox x:Name="NumTrialsTextBox" Text="50" Padding="8" Margin="0,0,0,10"/>
+
+                            <TextBlock Text="Timeout (minutes):" Margin="0,0,0,5"/>
+                            <TextBox x:Name="TimeoutTextBox" Text="60" Padding="8" Margin="0,0,0,10"/>
+
+                            <TextBlock Text="Optimization Method:" Margin="0,0,0,5"/>
+                            <ComboBox x:Name="OptimizerComboBox" Padding="8" Margin="0,0,0,10" SelectedIndex="0">
+                                <ComboBoxItem Content="TPE (Tree-structured Parzen Estimator)"/>
+                                <ComboBoxItem Content="Random Search"/>
+                                <ComboBoxItem Content="Grid Search"/>
+                            </ComboBox>
+
+                            <TextBlock Text="Objective Metric:" Margin="0,0,0,5"/>
+                            <ComboBox x:Name="MetricComboBox" Padding="8" Margin="0,0,0,10" SelectedIndex="0">
+                                <ComboBoxItem Content="Validation Accuracy (maximize)"/>
+                                <ComboBoxItem Content="Validation Loss (minimize)"/>
+                                <ComboBoxItem Content="F1-Score (maximize)"/>
+                            </ComboBox>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Hyperparameter Space -->
+                    <Border Background="{DynamicResource CardBackgroundBrush}" 
+                            CornerRadius="8" Padding="20" Margin="0,0,0,15">
+                        <StackPanel>
+                            <TextBlock Text="🎯 Hyperparameter Search Space" 
+                                       FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+
+                            <!-- Learning Rate -->
+                            <CheckBox x:Name="LearningRateCheckBox" Content="Learning Rate" 
+                                      IsChecked="True" Margin="0,0,0,5"/>
+                            <Grid Margin="20,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Min:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                <TextBox Grid.Column="1" x:Name="LRMinTextBox" Text="0.0001" Padding="5"/>
+                                <TextBlock Grid.Column="3" Text="Max:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                <TextBox Grid.Column="4" x:Name="LRMaxTextBox" Text="0.01" Padding="5"/>
+                            </Grid>
+
+                            <!-- Batch Size -->
+                            <CheckBox x:Name="BatchSizeCheckBox" Content="Batch Size" 
+                                      IsChecked="True" Margin="0,0,0,5"/>
+                            <Grid Margin="20,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox Grid.Column="0" Content="16" IsChecked="True"/>
+                                <CheckBox Grid.Column="2" Content="32" IsChecked="True"/>
+                                <CheckBox Grid.Column="4" Content="64" IsChecked="True"/>
+                            </Grid>
+
+                            <!-- Dropout -->
+                            <CheckBox x:Name="DropoutCheckBox" Content="Dropout Rate" 
+                                      IsChecked="True" Margin="0,0,0,5"/>
+                            <Grid Margin="20,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Min:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                <TextBox Grid.Column="1" x:Name="DropoutMinTextBox" Text="0.2" Padding="5"/>
+                                <TextBlock Grid.Column="3" Text="Max:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                <TextBox Grid.Column="4" x:Name="DropoutMaxTextBox" Text="0.7" Padding="5"/>
+                            </Grid>
+
+                            <!-- Optimizer -->
+                            <CheckBox x:Name="OptimizerTypeCheckBox" Content="Optimizer Type" 
+                                      IsChecked="True" Margin="0,0,0,5"/>
+                            <Grid Margin="20,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox Grid.Column="0" Content="Adam" IsChecked="True"/>
+                                <CheckBox Grid.Column="2" Content="SGD" IsChecked="True"/>
+                                <CheckBox Grid.Column="4" Content="AdamW" IsChecked="True"/>
+                            </Grid>
+
+                            <!-- Hidden Layers -->
+                            <CheckBox x:Name="HiddenLayersCheckBox" Content="Hidden Layers (for MLP)" 
+                                      IsChecked="False" Margin="0,0,0,5"/>
+                            <Grid Margin="20,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox Grid.Column="0" Content="128" IsChecked="True"/>
+                                <CheckBox Grid.Column="2" Content="256" IsChecked="True"/>
+                                <CheckBox Grid.Column="4" Content="512" IsChecked="True"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Action Buttons -->
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="StartAutoMLButton" Content="▶️ Start AutoML" 
+                                Padding="20,12" Margin="0,0,10,0"
+                                Click="StartAutoMLButton_Click"
+                                Background="{DynamicResource SuccessBrush}"
+                                Foreground="White" FontWeight="SemiBold"
+                                FontSize="14"/>
+                        <Button x:Name="StopAutoMLButton" Content="⏹️ Stop" 
+                                Padding="20,12" IsEnabled="False"
+                                Click="StopAutoMLButton_Click"
+                                Background="{DynamicResource DangerBrush}"
+                                Foreground="White"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Right Panel - Progress & Results -->
+                <StackPanel Grid.Column="2">
+                    <!-- Progress -->
+                    <Border Background="{DynamicResource CardBackgroundBrush}" 
+                            CornerRadius="8" Padding="20" Margin="0,0,0,15">
+                        <StackPanel>
+                            <TextBlock Text="📊 Optimization Progress" 
+                                       FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Status:" Margin="0,0,10,8"/>
+                                <TextBlock Grid.Row="0" Grid.Column="1" x:Name="StatusText" 
+                                           Text="Not started" Margin="0,0,0,8"/>
+
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Trials:" Margin="0,0,10,8"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" x:Name="TrialsText" 
+                                           Text="0 / 0" Margin="0,0,0,8"/>
+
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Best Score:" Margin="0,0,10,8"/>
+                                <TextBlock Grid.Row="2" Grid.Column="1" x:Name="BestScoreText" 
+                                           Text="-" FontWeight="SemiBold" Foreground="Green" Margin="0,0,0,8"/>
+
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Time Elapsed:" Margin="0,0,10,8"/>
+                                <TextBlock Grid.Row="3" Grid.Column="1" x:Name="TimeElapsedText" 
+                                           Text="00:00:00" Margin="0,0,0,8"/>
+                            </Grid>
+
+                            <ProgressBar x:Name="ProgressBar" Height="20" Margin="0,15,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Best Parameters -->
+                    <Border Background="{DynamicResource CardBackgroundBrush}" 
+                            CornerRadius="8" Padding="20" Margin="0,0,0,15">
+                        <StackPanel>
+                            <TextBlock Text="🏆 Best Parameters" 
+                                       FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+
+                            <Border BorderBrush="#DDD" BorderThickness="1" 
+                                    CornerRadius="4" Padding="10" Background="#F9F9F9">
+                                <TextBlock x:Name="BestParamsText" 
+                                           Text="No results yet" 
+                                           TextWrapping="Wrap" FontFamily="Consolas" FontSize="11"/>
+                            </Border>
+
+                            <Button x:Name="ApplyBestButton" Content="✅ Apply Best Parameters" 
+                                    Padding="12,8" Margin="0,10,0,0" IsEnabled="False"
+                                    Click="ApplyBestButton_Click"
+                                    Background="{DynamicResource PrimaryBrush}"
+                                    Foreground="White"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Trial History -->
+                    <Border Background="{DynamicResource CardBackgroundBrush}" 
+                            CornerRadius="8" Padding="20">
+                        <StackPanel>
+                            <TextBlock Text="📈 Trial History" 
+                                       FontSize="18" FontWeight="SemiBold" Margin="0,0,0,15"/>
+
+                            <DataGrid x:Name="TrialHistoryGrid" 
+                                      AutoGenerateColumns="False" 
+                                      Height="200"
+                                      IsReadOnly="True"
+                                      HeadersVisibility="Column">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="#" Binding="{Binding TrialNumber}" Width="40"/>
+                                    <DataGridTextColumn Header="Score" Binding="{Binding Score}" Width="80"/>
+                                    <DataGridTextColumn Header="LR" Binding="{Binding LearningRate}" Width="80"/>
+                                    <DataGridTextColumn Header="Batch" Binding="{Binding BatchSize}" Width="60"/>
+                                    <DataGridTextColumn Header="Dropout" Binding="{Binding Dropout}" Width="70"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                            <Button x:Name="ExportTrialsButton" Content="📤 Export Trials" 
+                                    Padding="10,6" Margin="0,10,0,0"
+                                    Click="ExportTrialsButton_Click" IsEnabled="False"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Page>
+

@@ -1,0 +1,735 @@
+<Page x:Class="ModelCreator.UI.Views.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d" 
+      d:DesignHeight="900" d:DesignWidth="1400"
+      Title="Home">
+
+    <Grid Background="{StaticResource BackgroundBrush}">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
+            <StackPanel Margin="60,40,60,60">
+                
+                <!-- Hero Section with Gradient Background -->
+                <Border Background="{StaticResource PrimaryBrush}" 
+                        CornerRadius="20" 
+                        Padding="48,40"
+                        Margin="0,0,0,40">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="30" ShadowDepth="0" Opacity="0.2" Color="#6366F1"/>
+                    </Border.Effect>
+                    <StackPanel>
+                        <TextBlock Text="🚀 Welcome to AI Model Builder" 
+                                  FontSize="42" 
+                                  FontWeight="Bold"
+                                  Foreground="White"
+                                  Margin="0,0,0,12"/>
+                        
+                        <TextBlock Text="ساخت، آموزش و استقرار مدل‌های هوش مصنوعی بدون نیاز به کدنویسی" 
+                                  FontSize="20" 
+                                  Foreground="White"
+                                  Opacity="0.9"
+                                  Margin="0,0,0,8"/>
+                        
+                        <TextBlock Text="Build, train, and deploy AI models without writing a single line of code" 
+                                  FontSize="18" 
+                                  Foreground="White"
+                                  Opacity="0.85"
+                                  Margin="0,0,0,24"/>
+                        
+                        <!-- Feature Highlights -->
+                        <StackPanel Orientation="Horizontal">
+                            <Border Style="{StaticResource FeatureBadge}" Background="#FFFFFF" Opacity="0.2">
+                                <TextBlock Text="✓ 6 Data Types" Foreground="White" FontSize="13" FontWeight="Medium"/>
+                            </Border>
+                            <Border Style="{StaticResource FeatureBadge}" Background="#FFFFFF" Opacity="0.2">
+                                <TextBlock Text="✓ 15+ Models" Foreground="White" FontSize="13" FontWeight="Medium"/>
+                            </Border>
+                            <Border Style="{StaticResource FeatureBadge}" Background="#FFFFFF" Opacity="0.2">
+                                <TextBlock Text="✓ Cloud Training" Foreground="White" FontSize="13" FontWeight="Medium"/>
+                            </Border>
+                            <Border Style="{StaticResource FeatureBadge}" Background="#FFFFFF" Opacity="0.2">
+                                <TextBlock Text="✓ AutoML" Foreground="White" FontSize="13" FontWeight="Medium"/>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+                
+                <!-- Data Types Section -->
+                <StackPanel Margin="0,0,0,40">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                        <TextBlock Text="📊 " FontSize="28" VerticalAlignment="Center"/>
+                        <TextBlock Text="Data Types" 
+                                  Style="{StaticResource SectionHeader}"
+                                  Margin="0"/>
+                        <TextBlock Text=" - انواع داده‌ها" 
+                                  Style="{StaticResource SectionHeader}"
+                                  Foreground="{StaticResource TextSecondaryBrush}"
+                                  Margin="8,0,0,0"/>
+                    </StackPanel>
+                    
+                    <TextBlock Style="{StaticResource DescriptionText}"
+                              Margin="0,0,0,24">
+                        <Run Text="انتخاب نوع داده مناسب برای پروژه خود. هر نوع داده با مدل‌های بهینه شده و پیش‌پردازش اختصاصی ارائه می‌شود."/>
+                        <LineBreak/>
+                        <Run Text="Choose the right data type for your project. Each type comes with optimized models and preprocessing." Foreground="{StaticResource TextTertiaryBrush}"/>
+                    </TextBlock>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <!-- Image Classification Card -->
+                        <Border Style="{StaticResource InteractiveCard}" Grid.Column="0" Grid.Row="0">
+                            <Button Click="ImageProject_Click" Background="Transparent" BorderThickness="0" Padding="0">
+                                <StackPanel>
+                                    <Border Background="#EEF2FF" 
+                                            CornerRadius="12" 
+                                            Width="64" 
+                                            Height="64" 
+                                            HorizontalAlignment="Center"
+                                            Margin="0,0,0,16">
+                                        <TextBlock Text="📷" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    
+                                    <TextBlock Text="Image Classification" 
+                                              FontSize="18" 
+                                              FontWeight="Bold" 
+                                              Foreground="{StaticResource TextPrimaryBrush}"
+                                              HorizontalAlignment="Center" 
+                                              Margin="0,0,0,8"/>
+                                    
+                                    <TextBlock Text="دسته‌بندی تصاویر" 
+                                              FontSize="13" 
+                                              Foreground="{StaticResource TextSecondaryBrush}" 
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,12"/>
+                                    
+                                    <TextBlock Text="Train powerful CNN models for image recognition and classification tasks."
+                                              Style="{StaticResource DescriptionText}"
+                                              TextAlignment="Center"
+                                              Margin="0,0,0,12"
+                                              FontSize="12"/>
+                                    
+                                    <!-- Model Tags -->
+                                    <WrapPanel HorizontalAlignment="Center" Margin="0,8,0,0">
+                                        <Border Background="#EEF2FF" CornerRadius="8" Padding="8,4" Margin="2">
+                                            <TextBlock Text="ResNet" FontSize="11" Foreground="{StaticResource PrimaryBrush}" FontWeight="Medium"/>
+                                        </Border>
+                                        <Border Background="#EEF2FF" CornerRadius="8" Padding="8,4" Margin="2">
+                                            <TextBlock Text="EfficientNet" FontSize="11" Foreground="{StaticResource PrimaryBrush}" FontWeight="Medium"/>
+                                        </Border>
+                                        <Border Background="#EEF2FF" CornerRadius="8" Padding="8,4" Margin="2">
+                                            <TextBlock Text="ViT" FontSize="11" Foreground="{StaticResource PrimaryBrush}" FontWeight="Medium"/>
+                                        </Border>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </Button>
+                        </Border>
+                        
+                        <!-- Text Classification Card -->
+                        <Border Style="{StaticResource InteractiveCard}" Grid.Column="1" Grid.Row="0">
+                            <Button Click="TextProject_Click" Background="Transparent" BorderThickness="0" Padding="0">
+                                <StackPanel>
+                                    <Border Background="#FEF3C7" 
+                                            CornerRadius="12" 
+                                            Width="64" 
+                                            Height="64" 
+                                            HorizontalAlignment="Center"
+                                            Margin="0,0,0,16">
+                                        <TextBlock Text="📝" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    
+                                    <TextBlock Text="Text Classification" 
+                                              FontSize="18" 
+                                              FontWeight="Bold" 
+                                              Foreground="{StaticResource TextPrimaryBrush}"
+                                              HorizontalAlignment="Center" 
+                                              Margin="0,0,0,8"/>
+                                    
+                                    <TextBlock Text="پردازش و دسته‌بندی متن" 
+                                              FontSize="13" 
+                                              Foreground="{StaticResource TextSecondaryBrush}" 
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,12"/>
+                                    
+                                    <TextBlock Text="Build NLP models for sentiment analysis, text categorization, and more."
+                                              Style="{StaticResource DescriptionText}"
+                                              TextAlignment="Center"
+                                              Margin="0,0,0,12"
+                                              FontSize="12"/>
+                                    
+                                    <WrapPanel HorizontalAlignment="Center" Margin="0,8,0,0">
+                                        <Border Background="#FEF3C7" CornerRadius="8" Padding="8,4" Margin="2">
+                                            <TextBlock Text="LSTM" FontSize="11" Foreground="{StaticResource WarningBrush}" FontWeight="Medium"/>
+                                        </Border>
+                                        <Border Background="#FEF3C7" CornerRadius="8" Padding="8,4" Margin="2">
+                                            <TextBlock Text="BERT" FontSize="11" Foreground="{StaticResource WarningBrush}" FontWeight="Medium"/>
+                                        </Border>
+                                        <Border Background="#FEF3C7" CornerRadius="8" Padding="8,4" Margin="2">
+                                            <TextBlock Text="Transformer" FontSize="11" Foreground="{StaticResource WarningBrush}" FontWeight="Medium"/>
+                                        </Border>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </Button>
+                        </Border>
+                        
+                        <!-- Audio Classification Card -->
+                        <Border Style="{StaticResource InteractiveCard}" Grid.Column="2" Grid.Row="0">
+                            <Button Click="AudioProject_Click" Background="Transparent" BorderThickness="0" Padding="0">
+                                <StackPanel>
+                                    <Border Background="#DBEAFE" 
+                                            CornerRadius="12" 
+                                            Width="64" 
+                                            Height="64" 
+                                            HorizontalAlignment="Center"
+                                            Margin="0,0,0,16">
+                                        <TextBlock Text="🎵" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    
+                                    <TextBlock Text="Audio Classification" 
+                                              FontSize="18" 
+                                              FontWeight="Bold" 
+                                              Foreground="{StaticResource TextPrimaryBrush}"
+                                              HorizontalAlignment="Center" 
+                                              Margin="0,0,0,8"/>
+                                    
+                                    <TextBlock Text="تشخیص و دسته‌بندی صدا" 
+                                              FontSize="13" 
+                                              Foreground="{StaticResource TextSecondaryBrush}" 
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,12"/>
+                                    
+                                    <TextBlock Text="Process audio signals for sound recognition and speech classification."
+                                              Style="{StaticResource DescriptionText}"
+                                              TextAlignment="Center"
+                                              Margin="0,0,0,12"
+                                              FontSize="12"/>
+                                    
+                                    <WrapPanel HorizontalAlignment="Center" Margin="0,8,0,0">
+                                        <Border Background="#DBEAFE" CornerRadius="8" Padding="8,4" Margin="2">
+                                            <TextBlock Text="Spectrogram CNN" FontSize="11" Foreground="{StaticResource InfoBrush}" FontWeight="Medium"/>
+                                        </Border>
+                                        <Border Background="#DBEAFE" CornerRadius="8" Padding="8,4" Margin="2">
+                                            <TextBlock Text="Mel Features" FontSize="11" Foreground="{StaticResource InfoBrush}" FontWeight="Medium"/>
+                                        </Border>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </Button>
+                        </Border>
+                        
+                        <!-- Video Classification Card -->
+                        <Border Style="{StaticResource InteractiveCard}" Grid.Column="3" Grid.Row="0">
+                            <Button Click="VideoProject_Click" Background="Transparent" BorderThickness="0" Padding="0">
+                                <StackPanel>
+                                    <Border Background="#FCE7F3" 
+                                            CornerRadius="12" 
+                                            Width="64" 
+                                            Height="64" 
+                                            HorizontalAlignment="Center"
+                                            Margin="0,0,0,16">
+                                        <TextBlock Text="🎬" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    
+                                    <TextBlock Text="Video Classification" 
+                                              FontSize="18" 
+                                              FontWeight="Bold" 
+                                              Foreground="{StaticResource TextPrimaryBrush}"
+                                              HorizontalAlignment="Center" 
+                                              Margin="0,0,0,8"/>
+                                    
+                                    <TextBlock Text="تشخیص اکشن در ویدئو" 
+                                              FontSize="13" 
+                                              Foreground="{StaticResource TextSecondaryBrush}" 
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,12"/>
+                                    
+                                    <TextBlock Text="Analyze video sequences for action recognition and activity classification."
+                                              Style="{StaticResource DescriptionText}"
+                                              TextAlignment="Center"
+                                              Margin="0,0,0,12"
+                                              FontSize="12"/>
+                                    
+                                    <WrapPanel HorizontalAlignment="Center" Margin="0,8,0,0">
+                                        <Border Background="#FCE7F3" CornerRadius="8" Padding="8,4" Margin="2">
+                                            <TextBlock Text="CNN3D" FontSize="11" Foreground="#EC4899" FontWeight="Medium"/>
+                                        </Border>
+                                        <Border Background="#FCE7F3" CornerRadius="8" Padding="8,4" Margin="2">
+                                            <TextBlock Text="SlowFast" FontSize="11" Foreground="#EC4899" FontWeight="Medium"/>
+                                        </Border>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </Button>
+                        </Border>
+                        
+                        <!-- Tabular Data Card -->
+                        <Border Style="{StaticResource InteractiveCard}" Grid.Column="0" Grid.Row="1">
+                            <Button Click="TabularProject_Click" Background="Transparent" BorderThickness="0" Padding="0">
+                                <StackPanel>
+                                    <Border Background="#DCFCE7" 
+                                            CornerRadius="12" 
+                                            Width="64" 
+                                            Height="64" 
+                                            HorizontalAlignment="Center"
+                                            Margin="0,0,0,16">
+                                        <TextBlock Text="📊" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    
+                                    <TextBlock Text="Tabular Data" 
+                                              FontSize="18" 
+                                              FontWeight="Bold" 
+                                              Foreground="{StaticResource TextPrimaryBrush}"
+                                              HorizontalAlignment="Center" 
+                                              Margin="0,0,0,8"/>
+                                    
+                                    <TextBlock Text="تحلیل داده‌های جدولی" 
+                                              FontSize="13" 
+                                              Foreground="{StaticResource TextSecondaryBrush}" 
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,12"/>
+                                    
+                                    <TextBlock Text="Work with CSV data for regression and classification tasks."
+                                              Style="{StaticResource DescriptionText}"
+                                              TextAlignment="Center"
+                                              Margin="0,0,0,12"
+                                              FontSize="12"/>
+                                    
+                                    <WrapPanel HorizontalAlignment="Center" Margin="0,8,0,0">
+                                        <Border Background="#DCFCE7" CornerRadius="8" Padding="8,4" Margin="2">
+                                            <TextBlock Text="XGBoost" FontSize="11" Foreground="{StaticResource SuccessBrush}" FontWeight="Medium"/>
+                                        </Border>
+                                        <Border Background="#DCFCE7" CornerRadius="8" Padding="8,4" Margin="2">
+                                            <TextBlock Text="LightGBM" FontSize="11" Foreground="{StaticResource SuccessBrush}" FontWeight="Medium"/>
+                                        </Border>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </Button>
+                        </Border>
+                        
+                        <!-- Time Series Card -->
+                        <Border Style="{StaticResource InteractiveCard}" Grid.Column="1" Grid.Row="1">
+                            <Button Click="TimeSeriesProject_Click" Background="Transparent" BorderThickness="0" Padding="0">
+                                <StackPanel>
+                                    <Border Background="#FEE2E2" 
+                                            CornerRadius="12" 
+                                            Width="64" 
+                                            Height="64" 
+                                            HorizontalAlignment="Center"
+                                            Margin="0,0,0,16">
+                                        <TextBlock Text="📈" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    
+                                    <TextBlock Text="Time Series" 
+                                              FontSize="18" 
+                                              FontWeight="Bold" 
+                                              Foreground="{StaticResource TextPrimaryBrush}"
+                                              HorizontalAlignment="Center" 
+                                              Margin="0,0,0,8"/>
+                                    
+                                    <TextBlock Text="پیش‌بینی سری زمانی" 
+                                              FontSize="13" 
+                                              Foreground="{StaticResource TextSecondaryBrush}" 
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,12"/>
+                                    
+                                    <TextBlock Text="Forecast future values and analyze temporal patterns in your data."
+                                              Style="{StaticResource DescriptionText}"
+                                              TextAlignment="Center"
+                                              Margin="0,0,0,12"
+                                              FontSize="12"/>
+                                    
+                                    <WrapPanel HorizontalAlignment="Center" Margin="0,8,0,0">
+                                        <Border Background="#FEE2E2" CornerRadius="8" Padding="8,4" Margin="2">
+                                            <TextBlock Text="LSTM" FontSize="11" Foreground="{StaticResource ErrorBrush}" FontWeight="Medium"/>
+                                        </Border>
+                                        <Border Background="#FEE2E2" CornerRadius="8" Padding="8,4" Margin="2">
+                                            <TextBlock Text="Prophet" FontSize="11" Foreground="{StaticResource ErrorBrush}" FontWeight="Medium"/>
+                                        </Border>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </Button>
+                        </Border>
+                        
+                        <!-- Medical Data Card -->
+                        <Border Style="{StaticResource InteractiveCard}" Grid.Column="2" Grid.Row="1">
+                            <Button Click="MedicalProject_Click" Background="Transparent" BorderThickness="0" Padding="0">
+                                <StackPanel>
+                                    <Border Background="#FCE7F3" 
+                                            CornerRadius="12" 
+                                            Width="64" 
+                                            Height="64" 
+                                            HorizontalAlignment="Center"
+                                            Margin="0,0,0,16">
+                                        <TextBlock Text="🏥" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    
+                                    <TextBlock Text="Medical Imaging" 
+                                              FontSize="18" 
+                                              FontWeight="Bold" 
+                                              Foreground="{StaticResource TextPrimaryBrush}"
+                                              HorizontalAlignment="Center" 
+                                              Margin="0,0,0,8"/>
+                                    
+                                    <TextBlock Text="تصویربرداری پزشکی" 
+                                              FontSize="13" 
+                                              Foreground="{StaticResource TextSecondaryBrush}" 
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,12"/>
+                                    
+                                    <TextBlock Text="Analyze medical images and physiological signals for diagnosis."
+                                              Style="{StaticResource DescriptionText}"
+                                              TextAlignment="Center"
+                                              Margin="0,0,0,12"
+                                              FontSize="12"/>
+                                    
+                                    <WrapPanel HorizontalAlignment="Center" Margin="0,8,0,0">
+                                        <Border Background="#FCE7F3" CornerRadius="8" Padding="8,4" Margin="2">
+                                            <TextBlock Text="MRI CNN" FontSize="11" Foreground="#EC4899" FontWeight="Medium"/>
+                                        </Border>
+                                        <Border Background="#FCE7F3" CornerRadius="8" Padding="8,4" Margin="2">
+                                            <TextBlock Text="ECG/EEG" FontSize="11" Foreground="#EC4899" FontWeight="Medium"/>
+                                        </Border>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </Button>
+                        </Border>
+                        
+                        <!-- Genomic Data Card -->
+                        <Border Style="{StaticResource InteractiveCard}" Grid.Column="3" Grid.Row="1">
+                            <Button Click="GenomicProject_Click" Background="Transparent" BorderThickness="0" Padding="0">
+                                <StackPanel>
+                                    <Border Background="#E0E7FF" 
+                                            CornerRadius="12" 
+                                            Width="64" 
+                                            Height="64" 
+                                            HorizontalAlignment="Center"
+                                            Margin="0,0,0,16">
+                                        <TextBlock Text="🧬" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    
+                                    <TextBlock Text="Genomic Analysis" 
+                                              FontSize="18" 
+                                              FontWeight="Bold" 
+                                              Foreground="{StaticResource TextPrimaryBrush}"
+                                              HorizontalAlignment="Center" 
+                                              Margin="0,0,0,8"/>
+                                    
+                                    <TextBlock Text="تحلیل ژنومی" 
+                                              FontSize="13" 
+                                              Foreground="{StaticResource TextSecondaryBrush}" 
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,12"/>
+                                    
+                                    <TextBlock Text="Process DNA/RNA sequences for gene classification."
+                                              Style="{StaticResource DescriptionText}"
+                                              TextAlignment="Center"
+                                              Margin="0,0,0,12"
+                                              FontSize="12"/>
+                                    
+                                    <WrapPanel HorizontalAlignment="Center" Margin="0,8,0,0">
+                                        <Border Background="#E0E7FF" CornerRadius="8" Padding="8,4" Margin="2">
+                                            <TextBlock Text="DNA CNN" FontSize="11" Foreground="{StaticResource PrimaryBrush}" FontWeight="Medium"/>
+                                        </Border>
+                                        <Border Background="#E0E7FF" CornerRadius="8" Padding="8,4" Margin="2">
+                                            <TextBlock Text="Seq Embed" FontSize="11" Foreground="{StaticResource PrimaryBrush}" FontWeight="Medium"/>
+                                        </Border>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </Button>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+                
+                <!-- Advanced Features Section -->
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                        <TextBlock Text="🚀 " FontSize="28" VerticalAlignment="Center"/>
+                        <TextBlock Text="Advanced Features" 
+                                  Style="{StaticResource SectionHeader}"
+                                  Margin="0"/>
+                        <TextBlock Text=" - ویژگی‌های پیشرفته" 
+                                  Style="{StaticResource SectionHeader}"
+                                  Foreground="{StaticResource TextSecondaryBrush}"
+                                  Margin="8,0,0,0"/>
+                    </StackPanel>
+                    
+                    <TextBlock Style="{StaticResource DescriptionText}"
+                              Margin="0,0,0,24">
+                        <Run Text="ابزارها و قابلیت‌های پیشرفته برای بهبود، مقایسه و استقرار مدل‌های خود."/>
+                        <LineBreak/>
+                        <Run Text="Advanced tools and capabilities to improve, compare, and deploy your models." Foreground="{StaticResource TextTertiaryBrush}"/>
+                    </TextBlock>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <!-- Model Comparison Card -->
+                        <Border Style="{StaticResource InteractiveCard}" Grid.Column="0" Grid.Row="0">
+                            <Button Click="ModelComparison_Click" Background="Transparent" BorderThickness="0" Padding="0">
+                                <StackPanel>
+                                    <Border Background="#EEF2FF" 
+                                            CornerRadius="12" 
+                                            Width="64" 
+                                            Height="64" 
+                                            HorizontalAlignment="Center"
+                                            Margin="0,0,0,16">
+                                        <TextBlock Text="📊" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    
+                                    <TextBlock Text="Model Comparison" 
+                                              FontSize="18" 
+                                              FontWeight="Bold" 
+                                              Foreground="{StaticResource TextPrimaryBrush}"
+                                              HorizontalAlignment="Center" 
+                                              Margin="0,0,0,8"/>
+                                    
+                                    <TextBlock Text="مقایسه و انتخاب بهترین مدل" 
+                                              FontSize="13" 
+                                              Foreground="{StaticResource TextSecondaryBrush}" 
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,12"/>
+                                    
+                                    <TextBlock Text="Compare performance metrics across different models and experiments to find the best solution."
+                                              Style="{StaticResource DescriptionText}"
+                                              TextAlignment="Center"
+                                              FontSize="12"/>
+                                </StackPanel>
+                            </Button>
+                        </Border>
+                        
+                        <!-- Ensemble Methods Card -->
+                        <Border Style="{StaticResource InteractiveCard}" Grid.Column="1" Grid.Row="0">
+                            <Button Click="EnsembleMethods_Click" Background="Transparent" BorderThickness="0" Padding="0">
+                                <StackPanel>
+                                    <Border Background="#FEF3C7" 
+                                            CornerRadius="12" 
+                                            Width="64" 
+                                            Height="64" 
+                                            HorizontalAlignment="Center"
+                                            Margin="0,0,0,16">
+                                        <TextBlock Text="🔗" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    
+                                    <TextBlock Text="Ensemble Methods" 
+                                              FontSize="18" 
+                                              FontWeight="Bold" 
+                                              Foreground="{StaticResource TextPrimaryBrush}"
+                                              HorizontalAlignment="Center" 
+                                              Margin="0,0,0,8"/>
+                                    
+                                    <TextBlock Text="ترکیب مدل‌ها برای دقت بالاتر" 
+                                              FontSize="13" 
+                                              Foreground="{StaticResource TextSecondaryBrush}" 
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,12"/>
+                                    
+                                    <TextBlock Text="Combine multiple models using voting, stacking, or bagging to boost accuracy."
+                                              Style="{StaticResource DescriptionText}"
+                                              TextAlignment="Center"
+                                              FontSize="12"/>
+                                </StackPanel>
+                            </Button>
+                        </Border>
+                        
+                        <!-- Cloud Training Card -->
+                        <Border Style="{StaticResource InteractiveCard}" Grid.Column="2" Grid.Row="0">
+                            <Button Click="CloudTraining_Click" Background="Transparent" BorderThickness="0" Padding="0">
+                                <StackPanel>
+                                    <Border Background="#DBEAFE" 
+                                            CornerRadius="12" 
+                                            Width="64" 
+                                            Height="64" 
+                                            HorizontalAlignment="Center"
+                                            Margin="0,0,0,16">
+                                        <TextBlock Text="☁️" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    
+                                    <TextBlock Text="Cloud Training" 
+                                              FontSize="18" 
+                                              FontWeight="Bold" 
+                                              Foreground="{StaticResource TextPrimaryBrush}"
+                                              HorizontalAlignment="Center" 
+                                              Margin="0,0,0,8"/>
+                                    
+                                    <TextBlock Text="آموزش در ابر با GPU قدرتمند" 
+                                              FontSize="13" 
+                                              Foreground="{StaticResource TextSecondaryBrush}" 
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,12"/>
+                                    
+                                    <TextBlock Text="Train models on AWS, Azure, or GCP with powerful GPU instances."
+                                              Style="{StaticResource DescriptionText}"
+                                              TextAlignment="Center"
+                                              FontSize="12"/>
+                                </StackPanel>
+                            </Button>
+                        </Border>
+                        
+                        <!-- Collaboration Card -->
+                        <Border Style="{StaticResource InteractiveCard}" Grid.Column="0" Grid.Row="1">
+                            <Button Click="Collaboration_Click" Background="Transparent" BorderThickness="0" Padding="0">
+                                <StackPanel>
+                                    <Border Background="#FCE7F3" 
+                                            CornerRadius="12" 
+                                            Width="64" 
+                                            Height="64" 
+                                            HorizontalAlignment="Center"
+                                            Margin="0,0,0,16">
+                                        <TextBlock Text="👥" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    
+                                    <TextBlock Text="Team Collaboration" 
+                                              FontSize="18" 
+                                              FontWeight="Bold" 
+                                              Foreground="{StaticResource TextPrimaryBrush}"
+                                              HorizontalAlignment="Center" 
+                                              Margin="0,0,0,8"/>
+                                    
+                                    <TextBlock Text="کار تیمی و مدیریت دسترسی" 
+                                              FontSize="13" 
+                                              Foreground="{StaticResource TextSecondaryBrush}" 
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,12"/>
+                                    
+                                    <TextBlock Text="Collaborate with your team, share projects, and manage permissions."
+                                              Style="{StaticResource DescriptionText}"
+                                              TextAlignment="Center"
+                                              FontSize="12"/>
+                                </StackPanel>
+                            </Button>
+                        </Border>
+                        
+                        <!-- AutoML Card -->
+                        <Border Style="{StaticResource InteractiveCard}" Grid.Column="1" Grid.Row="1">
+                            <Button Click="AutoML_Click" Background="Transparent" BorderThickness="0" Padding="0">
+                                <StackPanel>
+                                    <Border Background="#DCFCE7" 
+                                            CornerRadius="12" 
+                                            Width="64" 
+                                            Height="64" 
+                                            HorizontalAlignment="Center"
+                                            Margin="0,0,0,16">
+                                        <TextBlock Text="🤖" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    
+                                    <TextBlock Text="AutoML" 
+                                              FontSize="18" 
+                                              FontWeight="Bold" 
+                                              Foreground="{StaticResource TextPrimaryBrush}"
+                                              HorizontalAlignment="Center" 
+                                              Margin="0,0,0,8"/>
+                                    
+                                    <TextBlock Text="بهینه‌سازی خودکار مدل" 
+                                              FontSize="13" 
+                                              Foreground="{StaticResource TextSecondaryBrush}" 
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,12"/>
+                                    
+                                    <TextBlock Text="Automatic hyperparameter optimization using Optuna during training."
+                                              Style="{StaticResource DescriptionText}"
+                                              TextAlignment="Center"
+                                              FontSize="12"/>
+                                </StackPanel>
+                            </Button>
+                        </Border>
+                        
+                        <!-- Real-time API Card -->
+                        <Border Style="{StaticResource InteractiveCard}" Grid.Column="2" Grid.Row="1">
+                            <Button Click="Inference_Click" Background="Transparent" BorderThickness="0" Padding="0">
+                                <StackPanel>
+                                    <Border Background="#FEE2E2" 
+                                            CornerRadius="12" 
+                                            Width="64" 
+                                            Height="64" 
+                                            HorizontalAlignment="Center"
+                                            Margin="0,0,0,16">
+                                        <TextBlock Text="⚡" FontSize="36" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    
+                                    <TextBlock Text="Real-time API" 
+                                              FontSize="18" 
+                                              FontWeight="Bold" 
+                                              Foreground="{StaticResource TextPrimaryBrush}"
+                                              HorizontalAlignment="Center" 
+                                              Margin="0,0,0,8"/>
+                                    
+                                    <TextBlock Text="استنتاج لحظه‌ای با API" 
+                                              FontSize="13" 
+                                              Foreground="{StaticResource TextSecondaryBrush}" 
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,0,12"/>
+                                    
+                                    <TextBlock Text="Deploy models and get instant predictions via REST API endpoints."
+                                              Style="{StaticResource DescriptionText}"
+                                              TextAlignment="Center"
+                                              FontSize="12"/>
+                                </StackPanel>
+                            </Button>
+                        </Border>
+                    </Grid>
+                </StackPanel>
+                
+                <!-- Getting Started Section -->
+                <Border Background="{StaticResource PrimaryLightBrush}" 
+                        CornerRadius="16" 
+                        Padding="32"
+                        Margin="0,40,0,0"
+                        Opacity="0.1">
+                    <StackPanel>
+                        <TextBlock Text="💡 Getting Started" 
+                                  FontSize="22" 
+                                  FontWeight="Bold"
+                                  Foreground="{StaticResource TextPrimaryBrush}"
+                                  Margin="0,0,0,16"/>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                            <TextBlock Text="1️⃣" FontSize="20" Margin="0,0,12,0"/>
+                            <TextBlock Text="Select a data type from above" 
+                                      Style="{StaticResource DescriptionText}"
+                                      VerticalAlignment="Center"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                            <TextBlock Text="2️⃣" FontSize="20" Margin="0,0,12,0"/>
+                            <TextBlock Text="Upload your dataset and choose a model" 
+                                      Style="{StaticResource DescriptionText}"
+                                      VerticalAlignment="Center"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                            <TextBlock Text="3️⃣" FontSize="20" Margin="0,0,12,0"/>
+                            <TextBlock Text="Configure training parameters and start training" 
+                                      Style="{StaticResource DescriptionText}"
+                                      VerticalAlignment="Center"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="4️⃣" FontSize="20" Margin="0,0,12,0"/>
+                            <TextBlock Text="Monitor results and deploy your model" 
+                                      Style="{StaticResource DescriptionText}"
+                                      VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+                
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
